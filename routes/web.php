@@ -7,6 +7,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+//Retrieve Jobs
+
 Route::get('/jobs', function (){
     
     $jobs = Job::with('employer')->latest()->simplePaginate(3);
@@ -16,9 +18,14 @@ Route::get('/jobs', function (){
     ]);
 });
 
+
+//Open Create Job Page
+
 Route::get('/jobs/create', function(){
     return view('jobs.create');
 });
+
+//Open Specific Job Page (Based on ID)
 
 Route::get('/jobs/{id}', function ($id){
     $job = Job::find($id);
@@ -26,7 +33,7 @@ Route::get('/jobs/{id}', function ($id){
     return view('jobs.show', ['job' => $job]);
 });
 
-
+//Submit a Job via Create Job
 
 Route::post('/jobs/create', function () {
     request()->validate([
@@ -46,10 +53,7 @@ Route::post('/jobs/create', function () {
 
 });
 
-
-
-
-
+//Update a Job via Edit Job
 
 Route::patch('/jobs/{id}/edit', function ($id){
     //validate
@@ -59,7 +63,9 @@ Route::patch('/jobs/{id}/edit', function ($id){
         'salary' => ['required']
 
     ]);
+
     //authorize (on hold...)
+
     //update the job
     $job = Job::findOrfail($id);
 
@@ -76,17 +82,20 @@ Route::patch('/jobs/{id}/edit', function ($id){
     //and persist
     //redirect to the job page
 
-    return redirect('/jobs/' . $job->id);
+    return redirect('/jobs/'.$job->id);
 });
 
-
+// Destroy a Job
 
 Route::delete('/jobs/{id}', function ($id){
     //authorize (on hold...)
     // delete the job
     Job::findOrFail($id)->delete();
+
+    return redirect('/jobs');
 });
 
+// Open a Job to Edit
 
 Route::get('/jobs/{id}/edit', function ($id){
     $job = Job::find($id);
@@ -94,9 +103,8 @@ Route::get('/jobs/{id}/edit', function ($id){
     return view('jobs.edit', ['job' => $job]);
 });
 
+// Open a Contact Page
 
 Route::get('/contact', function () {
     return view('contact');
 });
-
-//Rollback to Ep 16 
