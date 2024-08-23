@@ -26,7 +26,9 @@ Route::get('/jobs/{id}', function ($id){
     return view('jobs.show', ['job' => $job]);
 });
 
-Route::post('/jobs', function () {
+
+
+Route::post('/jobs/create', function () {
     request()->validate([
 
         'title' => ['required', 'min:3'],
@@ -41,11 +43,15 @@ Route::post('/jobs', function () {
     ]);
 
     return redirect('/jobs');
+
 });
 
 
 
-Route::patch('/jobs/{id}', function ($id){
+
+
+
+Route::patch('/jobs/{id}/edit', function ($id){
     //validate
     request()->validate([
 
@@ -65,7 +71,7 @@ Route::patch('/jobs/{id}', function ($id){
 
     $job->update([
         'title' => request('title'),
-        'title' => request('salary'),
+        'salary' => request('salary'),
     ]);
     //and persist
     //redirect to the job page
