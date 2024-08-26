@@ -34,10 +34,10 @@
 
 
         @auth
-        <form method="POST" action="/logout">
-          @csrf
-          <x-form-button>Log Out</x-form-button>
-        </form>
+          <form method="POST" action="/logout">
+            @csrf
+            <x-form-button>Log Out</x-form-button>
+          </form>
         @endauth
 
 
